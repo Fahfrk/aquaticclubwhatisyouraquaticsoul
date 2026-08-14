@@ -505,6 +505,143 @@
             50% { opacity: 0.6; }
             100% { bottom: 100%; transform: translateX(50px); opacity: 0; }
         }
+        /* ----------------------------------------------------
+           IG STORY CANVAS EXPORT WRAPPER (9:16 - 1080 x 1920 px)
+           ซ่อนจากการแสดงผลปกติ แต่จะถูกเรียกใช้ตอน Save รูป
+        ---------------------------------------------------- */
+        #ig-story-export-canvas {
+            position: fixed;
+            left: -9999px;
+            top: 0;
+            width: 1080px;
+            height: 1920px;
+            background: linear-gradient(180deg, #bfe8f3 0%, #76b7d4 50%, #468cae 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 60px;
+            box-sizing: border-box;
+            font-family: 'Sarabun', sans-serif;
+            color: #1f506d;
+        }
+
+        .ig-card {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 64px;
+            padding: 70px 50px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.18);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            border: 8px solid #ffffff;
+        }
+
+        .ig-club-tag {
+            background: #eaf6fa;
+            color: #2b7092;
+            font-family: 'Fredoka', cursive;
+            padding: 12px 36px;
+            border-radius: 40px;
+            font-size: 28px;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ig-char-img-wrap {
+            width: 480px;
+            height: 480px;
+            margin: 20px auto 30px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ig-char-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .ig-subtitle {
+            font-family: 'Fredoka', cursive;
+            font-size: 28px;
+            letter-spacing: 4px;
+            color: #8daec0;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .ig-title {
+            font-family: 'Mitr', sans-serif;
+            font-size: 68px;
+            color: #1d5272;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .ig-tagline {
+            font-family: 'Fredoka', cursive;
+            font-size: 38px;
+            color: #f06a8e;
+            margin-bottom: 30px;
+        }
+
+        .ig-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            margin-bottom: 36px;
+        }
+
+        .ig-tag-pill {
+            background: #fff0f3;
+            color: #e05275;
+            font-size: 26px;
+            padding: 8px 26px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+
+        .ig-desc {
+            font-size: 28px;
+            line-height: 1.6;
+            color: #43647a;
+            margin-bottom: 36px;
+            text-align: center;
+            background: #f8fcfe;
+            padding: 28px 32px;
+            border-radius: 36px;
+            border: 2px solid #e2f1f5;
+        }
+
+        .ig-quote {
+            background: #f0f9fc;
+            border-radius: 30px;
+            padding: 24px 32px;
+            font-style: italic;
+            font-size: 30px;
+            color: #1f506d;
+            font-weight: 600;
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .ig-footer {
+            font-family: 'Fredoka', cursive;
+            font-size: 24px;
+            color: #ffffff;
+            margin-top: 40px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
     </style>
 </head>
 <body>
@@ -805,7 +942,7 @@
         },
         {
             num: 5,
-            q: "คุณกำลังจัดงานอยู่ แต่มีคนวิจารณ์คุณโดยที่คุณคิดว่าเขาเข้าใจผิด คุณจะ...",
+            q: "คุณกำลังช่วยจัดงานอยู่ แต่มีปลาตัวหนึ่งมาวิจารณ์คุณโดยที่คุณคิดว่าเขาเข้าใจผิด คุณจะ...",
             options: [
                 { text: "A. อธิบายเหตุผลของตัวเองอย่างใจเย็น", score: { Stingray: 2, Coral: 1 } },
                 { text: "B. ฟังไว้ก่อน แล้วเอามาคิดว่ามีอะไรที่ปรับปรุงได้ไหม", score: { Axolotl: 2, Stingray: 1 } },
@@ -876,7 +1013,7 @@
         },
         {
             num: 12,
-            q: "เหมือนจะถึงเวลาที่ต้องกลับบ้านแล้วนะ นั้นขวดอะไรน่ะ เหมือนจะมีข้อความในขวดที่ลอยน้ำอยู่แล้ว คุณคิดว่าข้อความนั้นคืออะไร?",
+            q: "เหมือนจะถึงเวลาที่ต้องกลับบ้านแล้วนะ นั้นขวดอะไรน่ะ เหมือนจะมีข้อความในขวดที่ลอยน้ำอยู่ คุณคิดว่าข้อความนั้นคืออะไร?",
             options: [
                 { text: "A. “ไม่ต้องรีบ ชีวิตค่อย ๆ เป็นค่อย ๆ ไปก็ได้”", score: { Axolotl: 2, Blobfish: 1 } },
                 { text: "B. “ขอให้ได้อยู่กับคนที่เรารักและรักเราก็พอแล้ว”", score: { Coral: 2, Stingray: 1 } },
@@ -997,15 +1134,26 @@
 
         const charData = characters[winningCharKey];
 
-        document.getElementById('res-img').src = charData.img;
-        document.getElementById('res-title').innerHTML = `${charData.name}<br><span style="font-size:20px; font-weight:400; color:#5c839b;">(${charData.thName})</span>`;
-        document.getElementById('res-tagline').innerText = charData.tagline;
-        document.getElementById('res-desc').innerText = charData.desc;
-        document.getElementById('res-quote').innerText = charData.quote;
-        document.getElementById('res-vet-fact').innerHTML = charData.vetFact;
+       // 1. Render Normal Web Result Page
+        document.getElementById('res-img').src = winningCharData.img;
+        document.getElementById('res-title').innerHTML = `${winningCharData.name}<br><span style="font-size:20px; font-weight:400; color:#5c839b;">(${winningCharData.thName})</span>`;
+        document.getElementById('res-tagline').innerText = winningCharData.tagline;
+        document.getElementById('res-desc').innerText = winningCharData.desc;
+        document.getElementById('res-quote').innerText = winningCharData.quote;
+        document.getElementById('res-vet-fact').innerHTML = winningCharData.vetFact;
 
         const tagsContainer = document.getElementById('res-tags');
-        tagsContainer.innerHTML = charData.tags.map(t => `<span class="tag-pill">#${t}</span>`).join('');
+        tagsContainer.innerHTML = winningCharData.tags.map(t => `<span class="tag-pill">#${t}</span>`).join('');
+
+        // 2. Render IG Story Export Template (No Vet Fact)
+        document.getElementById('ig-img').src = winningCharData.img;
+        document.getElementById('ig-title').innerHTML = `${winningCharData.name} <span style="font-size:42px; font-weight:400; color:#5c839b;">(${winningCharData.thName})</span>`;
+        document.getElementById('ig-tagline').innerText = winningCharData.tagline;
+        document.getElementById('ig-desc').innerText = winningCharData.desc;
+        document.getElementById('ig-quote').innerText = winningCharData.quote;
+        
+        const igTagsContainer = document.getElementById('ig-tags');
+        igTagsContainer.innerHTML = winningCharData.tags.map(t => `<span class="ig-tag-pill">#${t}</span>`).join('');
 
         nextPage('result');
     }
@@ -1018,18 +1166,19 @@
         nextPage(1);
     }
 
-    function saveResultImage() {
+// Save as 9:16 IG Story Size (1080 x 1920)
+    function saveResultStoryImage() {
         playSound('audio-click');
-        const cardElement = document.getElementById('result-card-element');
+        const exportCanvas = document.getElementById('ig-story-export-canvas');
         
-        html2canvas(cardElement, {
-            scale: 2,
+        html2canvas(exportCanvas, {
+            scale: 1, // Full 1080x1920
             useCORS: true,
-            backgroundColor: "#ffffff",
-            borderRadius: 32
+            allowTaint: true,
+            backgroundColor: null
         }).then(canvas => {
             const link = document.createElement('a');
-            link.download = `my-aquatic-soul-${Date.now()}.png`;
+            link.download = `aquatic-soul-story-${Date.now()}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
         }).catch(err => {
