@@ -793,13 +793,44 @@
     // --- AUDIO CONTROLLER LOGIC ---
     let isMuted = false;
 
+    function initAudio() {
+        const audioIds = ['audio-bgm', 'audio-click', 'audio-magic', 'audio-fanfare'];
+        audioIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                try {
+                    let promise = el.play();
+                    if (promise !== undefined) {
+                        promise.then(() => {
+                            if (id !== 'audio-bgm') el.pause();
+                        }).catch(e => {
+                        });
+                    }
+                } catch (err) {}
+            }
+        });
+    }
+
     function playSound(soundId) {
         if (isMuted) return;
         const sound = document.getElementById(soundId);
         if (sound) {
-            sound.currentTime = 0;
-            sound.play().catch(e => console.log("Audio play blocked by browser:", e));
+            try {
+                sound.currentTime = 0;
+                let promise = sound.play();
+                if (promise !== undefined) {
+                    promise.catch(e => {}); // ป้องกัน error ขัดจังหวะ
+                }
+            } catch (err) {}
         }
+    }
+
+    function startQuiz() {
+        try {
+            initAudio();
+        } catch (e) {}
+        
+        nextPage(2);
     }
 
     function playBGM() {
