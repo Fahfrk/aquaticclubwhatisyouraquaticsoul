@@ -1025,6 +1025,7 @@
 
     let scores = { Axolotl: 0, Jellyfish: 0, Stingray: 0, Blobfish: 0, Goldfish: 0, Coral: 0 };
     let currentPage = 1;
+    let winningCharData = null;
 
     window.addEventListener('DOMContentLoaded', () => {
         renderQuizPages();
@@ -1082,6 +1083,7 @@
     }
 
     function startQuiz() {
+        initAudio();
         playSound('audio-click');
         nextPage(2);
     }
@@ -1098,7 +1100,7 @@
 
     function enterUnderwater() {
         playSound('audio-magic');
-        playBGM(); // เริ่มเล่น Background Music เมื่อเข้าสู่อควาเรียมใต้น้ำ
+        playBGM();
         document.getElementById('app').classList.add('underwater-bg');
         nextPage(7);
     }
@@ -1131,9 +1133,10 @@
                 winningCharKey = key;
             }
         }
+
         winningCharData = characters[winningCharKey];
 
-       // 1. Render Normal Web Result Page
+        // 1. Render Normal Web Result Page
         document.getElementById('res-img').src = winningCharData.img;
         document.getElementById('res-title').innerHTML = `${winningCharData.name}<br><span style="font-size:20px; font-weight:400; color:#5c839b;">(${winningCharData.thName})</span>`;
         document.getElementById('res-tagline').innerText = winningCharData.tagline;
@@ -1165,7 +1168,7 @@
         nextPage(1);
     }
 
-// Save as 9:16 IG Story Size (1080 x 1920)
+    // Save as 9:16 IG Story Size (1080 x 1920)
     function saveResultStoryImage() {
         playSound('audio-click');
         const exportCanvas = document.getElementById('ig-story-export-canvas');
@@ -1188,21 +1191,18 @@
 
     function shareResult() {
         playSound('audio-click');
-        if (navigator.share) {
-            navigator.share({
-                title: "WHAT'S YOUR AQUATIC SOUL? 🫧",
-                text: "มาค้นหาสิ่งมีชีวิตใต้ทะเลที่เหมือนคุณที่สุดกันนะ!",
-                url: window.location.href
-            }).catch(console.error);
+        const shareData = {
+            title: "WHAT'S YOUR AQUATIC SOUL? 🫧",
+            text: "มาค้นหาสิ่งมีชีวิตใต้ทะเลที่เหมือนคุณที่สุดกันนะ!",
+            url: window.location.href.startsWith('http') ? window.location.href : 'https://fahfrk.github.io/aquaticclubwhatisyouraquaticsoul/'
+        };
+
         if (navigator.share && window.location.protocol.startsWith('http')) {
             navigator.share(shareData).catch(console.error);
         } else {
-            navigator.clipboard.writeText(window.location.href);
-            alert("คัดลอกลิงก์แบบทดสอบเรียบร้อยแล้ว! สามารถนำไปส่งต่อให้เพื่อนได้เลย 🫧");
+            navigator.clipboard.writeText(shareData.url).then(() => {
+                alert("คัดลอกลิงก์แบบทดสอบเรียบร้อยแล้ว! นำไปโพสต์แชร์ให้เพื่อนเล่นได้เลย 🫧");
+            }).catch(() => {
+                alert("คัดลอกลิงก์: " + shareData.url);
+            });
         }
-    }
-</script>
-
-</body>
-</html>
-
