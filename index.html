@@ -790,64 +790,54 @@
 </div>
 
 <script>
-    // --- AUDIO CONTROLLER LOGIC ---
+    // --- 1. ROBUST NAVIGATION SYSTEM ---
+    let currentPage = 1;
+
+    function goToPage(pageNum) {
+        // Change Page Immediately
+        const allPages = document.querySelectorAll('.page');
+        allPages.forEach(p => p.classList.remove('active'));
+
+        const target = document.getElementById(pageNum === 'result' ? 'page-result' : `page-${pageNum}`);
+        if (target) {
+            target.classList.add('active');
+            currentPage = pageNum;
+        }
+
+        // Try playing sound safely
+        safePlaySound('audio-click');
+    }
+
+    function enterUnderwater() {
+        document.getElementById('app').classList.add('underwater-bg');
+        safePlaySound('audio-magic');
+        safePlayBGM();
+        goToPage(7);
+    }
+
+    // --- 2. AUDIO CONTROLLER (SAFE & NON-BLOCKING) ---
     let isMuted = false;
 
-    function initAudio() {
-        const audioIds = ['audio-bgm', 'audio-click', 'audio-magic', 'audio-fanfare'];
-        audioIds.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                try {
-                    let promise = el.play();
-                    if (promise !== undefined) {
-                        promise.then(() => {
-                            if (id !== 'audio-bgm') el.pause();
-                        }).catch(e => {
-                        });
-                    }
-                } catch (err) {}
-            }
-        });
-    }
-
-    function playSound(soundId) {
+    function safePlaySound(id) {
         if (isMuted) return;
-        const sound = document.getElementById(soundId);
-        if (sound) {
-            try {
-                sound.currentTime = 0;
-                let promise = sound.play();
-                if (promise !== undefined) {
-                    promise.catch(e => {}); // ป้องกัน error ขัดจังหวะ
-                }
-            } catch (err) {}
-        }
-    }
-
-    function startQuiz() {
         try {
-            initAudio();
+            const el = document.getElementById(id);
+            if (el && el.src) {
+                el.currentTime = 0;
+                el.play().catch(() => {});
+            }
         } catch (e) {}
-        
-        nextPage(2);
     }
 
-    function playBGM() {
+    function safePlayBGM() {
         if (isMuted) return;
-        const bgm = document.getElementById('audio-bgm');
-        if (bgm && bgm.paused) {
-            bgm.volume = 0.4; // 40% Volume for BGM
-            bgm.play().catch(e => console.log("BGM play blocked:", e));
-        }
-    }
-
-    function stopBGM() {
-        const bgm = document.getElementById('audio-bgm');
-        if (bgm) {
-            bgm.pause();
-            bgm.currentTime = 0;
-        }
+        try {
+            const bgm = document.getElementById('audio-bgm');
+            if (bgm && bgm.src) {
+                bgm.volume = 0.35;
+                bgm.play().catch(() => {});
+            }
+        } catch (e) {}
     }
 
     function toggleAudio() {
@@ -857,15 +847,14 @@
 
         if (isMuted) {
             icon.className = 'fa-solid fa-volume-xmark';
-            bgm.pause();
+            if (bgm) bgm.pause();
         } else {
             icon.className = 'fa-solid fa-volume-high';
             if (currentPage >= 7 && currentPage <= 20) {
-                bgm.play().catch(e => {});
+                safePlayBGM();
             }
         }
     }
-
     // --- QUIZ DATA ---
     const characters = {
         Axolotl: {
