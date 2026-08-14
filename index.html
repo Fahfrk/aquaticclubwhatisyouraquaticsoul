@@ -707,7 +707,7 @@
     <div class="page" id="page-5">
         <div class="story-card">
             <div class="story-icon">🎁✨</div>
-            <p class="story-text">จู่ๆ คุณก็เห็นกล่องสมบัติปริศนาเปล่งแสงอยู่ตรงมุมตู้ปลาใหญ่!</p>
+            <p class="story-text">จู่ๆ คุณก็เห็นกล่องสมบัติปริศนาเปล่งแสงอยู่ตรงมุมของตู้ปลา!</p>
         </div>
         <button class="btn-primary" onclick="nextPage(6)">เข้าไปดูใกล้ๆ 🔍</button>
     </div>
@@ -733,9 +733,9 @@
     <!-- PAGE 8: Story 7 -->
     <div class="page" id="page-8">
         <div class="pirate-letter">
-            <p style="margin-bottom: 8px;">📜 <strong>จดหมายลับใต้น้ำ:</strong></p>
-            <p>“คุณคือผู้โชคดีได้รับสิทธิพิเศษในการเป็นสัตว์น้ำ 1 วัน ก่อนตะวันจะลับหายไปจากเส้นขอบฟ้า จงออกไปใช้ชีวิต แล้วมาดูกันว่าคุณจะเป็นสัตว์น้ำแบบไหน โฮ่ๆๆ”</p>
-            <p style="text-align: right; margin-top: 10px; font-weight: 600;">- จากโจรสลัดสหายใต้ท้องทะเล 🏴‍☠️</p>
+            <p style="margin-bottom: 8px;">📜 <strong>จดหมายถึงนักสำรวจผู้ค้นพบสมบัติอันล้ำค่า:</strong></p>
+            <p>“ว่าไงสหาย! ยินดีด้วย! คุณคือผู้โชคดีได้รับสิทธิพิเศษในการเป็นสัตว์น้ำ 1 วัน ก่อนตะวันจะลับหายไปจากเส้นขอบฟ้า จงออกไปใช้ชีวิต แล้วมาดูกันว่าคุณจะเป็นสัตว์น้ำแบบไหน ฮ่าๆๆ”</p>
+            <p style="text-align: right; margin-top: 10px; font-weight: 600;">- จากโจรสลัดสหายแห่งผืนน้ำ 🏴‍☠️</p>
         </div>
         <button class="btn-primary btn-pink" style="margin-top: 20px;" onclick="nextPage(9)">START! 🫧</button>
     </div>
@@ -770,7 +770,7 @@
 
                     <div class="result-vet-fact" id="res-vet-fact">🩺 Vet Fact</div>
 
-                    <p class="result-footer-tag">✨ Aquatic Soul Quiz by ชมรมปลาสวยน้ำใส ✨</p>
+                    <p class="result-footer-tag">✨ Aquatic Soul Quiz by ชมรมปลาสวยน้ำใส <br> ติดตามการเดินทางของพวกเราได้ที่ @vetmuaquatic.official  ✨</p>
                 </div>
             </div>
 
@@ -1131,8 +1131,7 @@
                 winningCharKey = key;
             }
         }
-
-        const charData = characters[winningCharKey];
+        winningCharData = characters[winningCharKey];
 
        // 1. Render Normal Web Result Page
         document.getElementById('res-img').src = winningCharData.img;
@@ -1195,6 +1194,8 @@
                 text: "มาค้นหาสิ่งมีชีวิตใต้ทะเลที่เหมือนคุณที่สุดกันนะ!",
                 url: window.location.href
             }).catch(console.error);
+        if (navigator.share && window.location.protocol.startsWith('http')) {
+            navigator.share(shareData).catch(console.error);
         } else {
             navigator.clipboard.writeText(window.location.href);
             alert("คัดลอกลิงก์แบบทดสอบเรียบร้อยแล้ว! สามารถนำไปส่งต่อให้เพื่อนได้เลย 🫧");
